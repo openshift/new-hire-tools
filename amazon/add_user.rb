@@ -38,7 +38,7 @@ if __FILE__ == $PROGRAM_NAME
    end
 
    unless user_name and gpg_path
-      puts "Usage: upload_file.rb <USER_NAME> </PATH/TO/GPG/KEY> <GPG_RECIPIENT> [-g GROUP_NAME]"
+      puts "Usage: add_user.rb <USER_NAME> </PATH/TO/GPG/KEY> <GPG_RECIPIENT> [-g GROUP_NAME]"
       exit 1
    end
 
