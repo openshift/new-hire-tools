@@ -16,6 +16,7 @@ def deleteUser(user)
 
       #remove user's mfa devices
       user.mfa_devices.clear
+
       #remove user's signing certificates
       user.signing_certificates.clear
 
@@ -27,16 +28,18 @@ def deleteUser(user)
 end
 
 if __FILE__ == $PROGRAM_NAME
-   # grab user_name from args
+   # grab user_name, gpg path, and the gpg recipient from args
    user_name = ARGV[0]
    gpg_path = ARGV[1]
    gpg_recipient = ARGV[2]
    group_name = 'dev'
 
+   #Check for group flag
    if (ARGV[3] == "-g") then
       group_name = ARGV[4]
    end
 
+   #Check arguments are present, if not print usage
    unless user_name and gpg_path
       puts "Usage: add_user.rb <USER_NAME> </PATH/TO/GPG/KEY> <GPG_RECIPIENT> [-g GROUP_NAME]"
       exit 1
@@ -58,7 +61,7 @@ if __FILE__ == $PROGRAM_NAME
    # get the specified group
    group = iam.groups[group_name]
 
-   # check if group exists, if not create it and notify the user that it was done for them automatically
+   # check if group exists, if not delete the user and exit with warning
    if(!group.exists?) then
       puts "The specified group does not exist. Aborting..."
       deleteUser(user)
@@ -89,13 +92,14 @@ if __FILE__ == $PROGRAM_NAME
    #Restore STDOUT
    STDOUT.reopen(stdout_orig)
 
-   #Store credentials into gpg
+   #Store credentials into gpg starting by importing key
    system "gpg --import #{gpg_path}"
    if($?.exitstatus != 0) then
       puts "The gpg path is wrong. You will need to manually encrypt the <user>.cred file"
       exit(1)
    end
 
+   #Next encrypt gpg
    system "gpg -r #{gpg_recipient} -e #{user_name}.cred"
    if($?.exitstatus  != 0) then
       puts "The gpg recipient is wrong. You will need to manually encrypt the <user>.cred file"
