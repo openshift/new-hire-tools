@@ -86,16 +86,20 @@ if __FILE__ == $PROGRAM_NAME
          exit(0)
       end
    end
+  
+   begin 
+      #Try to add the user to the group
+      add_results = JSON.parse "[" + `curl https://api.github.com/teams/#{teams[group_id]["id"]}/members/#{new_member_login} -s -X PUT -H "Content-Length: 0" -u #{user_name}:#{password}` + "]"
    
-   #Try to add the user to the group
-   add_results = JSON.parse "[" + `curl https://api.github.com/teams/#{teams[group_id]["id"]}/members/#{new_member_login} -s -X PUT -H "Content-Length: 0" -u #{user_name}:#{password}` + "]"
-   
-   #Check if api returned permission error
-   if(add_results == "Must have admin rights to Repository.") then
-      puts "You do not have permissiont to add the user to the specified group. Please check your permissions and try again."
-      exit(1)
-   end
+      #Check if api returned permission error
+      if(add_results == "Must have admin rights to Repository.") then
+         puts "You do not have permissiont to add the user to the specified group. Please check your permissions and try again."
+         exit(1)
+      end
 
-   #Print that the user was successfully added
-   puts "The user was successfully added to the team!"
+      #Print that the user was successfully added
+      puts "The user was successfully added to the team!"
+   rescue
+      puts "There was a problem with making your api request. Please check yuor permissions and try again"
+   end
 end
