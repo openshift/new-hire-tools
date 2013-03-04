@@ -95,14 +95,16 @@ if __FILE__ == $PROGRAM_NAME
    #Store credentials into gpg starting by importing key
    system "gpg --import #{gpg_path}"
    if($?.exitstatus != 0) then
-      puts "The gpg path is wrong. You will need to manually encrypt the <user>.cred file"
+      puts "The gpg path is wrong. You will need to manually encrypt the user's #{user_name}.cred file"
       exit(1)
    end
 
    #Next encrypt gpg
    system "gpg -r #{gpg_recipient} -e #{user_name}.cred"
    if($?.exitstatus  != 0) then
-      puts "The gpg recipient is wrong. You will need to manually encrypt the <user>.cred file"
+      puts "The gpg recipient is wrong. You will need to manually encrypt the user's #{user_name}.cred file"
       exit(1)
    end
+
+   puts "The user's credentials were successfully encrypted under the file #{user_name}.cred.gpg"
 end
