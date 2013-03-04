@@ -1,4 +1,4 @@
-The following script add_user.rb needs a config.yml file in the format of:
+The following script add_user.rb needs an amazon_config.yml file in your home directory in the format of:
 
 access_key_id: <key_id>
 secret_access_key: <secret_key>

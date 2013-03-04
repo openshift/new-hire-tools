@@ -15,10 +15,10 @@ require 'rubygems'
 require 'yaml'
 require 'aws-sdk'
 
-config_file = File.join(File.dirname(__FILE__), "config.yml")
+config_file = File.join(ENV['HOME'], "amazon_config.yml")
 unless File.exist?(config_file)
   puts <<END
-To run the script, put your credentials in config.yml as follows:
+To run the script, put your credentials in amazon_config.yml located in your home directory as follows:
 
 access_key_id: YOUR_ACCESS_KEY_ID
 secret_access_key: YOUR_SECRET_ACCESS_KEY
