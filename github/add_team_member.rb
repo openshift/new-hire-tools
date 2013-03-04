@@ -93,13 +93,13 @@ if __FILE__ == $PROGRAM_NAME
    
       #Check if api returned permission error
       if(add_results == "Must have admin rights to Repository.") then
-         puts "You do not have permissiont to add the user to the specified group. Please check your permissions and try again."
+         puts "You do not have permission to add the user to the specified group. Please check your permissions and try again."
          exit(1)
       end
 
       #Print that the user was successfully added
       puts "The user was successfully added to the team!"
    rescue
-      puts "There was a problem with making your api request. Please check yuor permissions and try again"
+      puts "There was a problem with making your api request. Please check yuor permissions and try again."
    end
 end
