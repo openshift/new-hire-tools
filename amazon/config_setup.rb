@@ -13,6 +13,7 @@
 
 require 'rubygems'
 require 'yaml'
+require 'aws'
 require 'aws-sdk'
 
 config_file = File.join(ENV['HOME'], "amazon_config.yml")
