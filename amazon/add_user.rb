@@ -85,7 +85,7 @@ if __FILE__ == $PROGRAM_NAME
 
    #Print credentials
    puts "User name: " + user_name
-   puts "Temporary password: " + temp_password
+   puts "Password: " + temp_password
    puts "Key id: " + key.id
    puts "Secret key: " + key.secret
 
