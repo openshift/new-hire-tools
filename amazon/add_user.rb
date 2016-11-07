@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 require File.expand_path(File.dirname(__FILE__) + '/config_setup.rb')
 require 'securerandom'
 
@@ -5,12 +7,12 @@ def deleteUser(user)
    begin
       #remove user from groups
       user.groups.clear
- 
+
       #remove user's login ability
       if(user.login_profile.exists?)
          user.login_profile.delete
       end
-  
+
       #remove user's access keys
       user.access_keys.clear
 
