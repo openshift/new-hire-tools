@@ -63,7 +63,7 @@ if __FILE__ == $PROGRAM_NAME
    #Get new user
    new_member = JSON.parse `curl https://api.github.com/users/#{new_member_login} -s -u #{user_name}:#{password}`
    
-   #If they don't exit, notify the user and gracefully exit
+   #If they don't exist, notify the user and gracefully exit
    if(new_member["message"] == "Not Found") then
       puts "The specified user doesn't exist! Please try again."
       exit(1)
