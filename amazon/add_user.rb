@@ -32,18 +32,17 @@ end
 if __FILE__ == $PROGRAM_NAME
    # grab user_name, gpg path, and the gpg recipient from args
    user_name = ARGV[0]
-   gpg_path = ARGV[1]
-   gpg_recipient = ARGV[2]
+   gpg_recipient = ARGV[1]
    group_name = 'dev'
 
    #Check for group flag
-   if (ARGV[3] == "-g") then
-      group_name = ARGV[4]
+   if (ARGV[2] == "-g") then
+      group_name = ARGV[3]
    end
 
    #Check arguments are present, if not print usage
-   unless user_name and gpg_path
-      puts "Usage: add_user.rb <USER_NAME> </PATH/TO/GPG/KEY> <GPG_RECIPIENT> [-g GROUP_NAME]"
+   unless user_name # and gpg_path
+      puts "Usage: add_user.rb <USER_NAME> <GPG_RECIPIENT> [-g GROUP_NAME]"
       exit 1
    end
 
@@ -94,14 +93,7 @@ if __FILE__ == $PROGRAM_NAME
    #Restore STDOUT
    STDOUT.reopen(stdout_orig)
 
-   #Store credentials into gpg starting by importing key
-   system "gpg --import #{gpg_path}"
-   if($?.exitstatus != 0) then
-      puts "The gpg path is wrong. You will need to manually encrypt the user's #{user_name}.cred file"
-      exit(1)
-   end
-
-   #Next encrypt gpg
+   #Next encrypt credentials
    system "gpg -r #{gpg_recipient} -e #{user_name}.cred"
    if($?.exitstatus  != 0) then
       puts "The gpg recipient is wrong. You will need to manually encrypt the user's #{user_name}.cred file"
